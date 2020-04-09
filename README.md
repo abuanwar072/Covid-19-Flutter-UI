@@ -1,6 +1,6 @@
 # Covid-19 - Flutter UI
 
-## [Watch it on YouTube - coming soon](#)
+## [Watch it on YouTube](https://youtu.be/zx6uMCoW2gQ)
 
 **Packages we are using:**
 
