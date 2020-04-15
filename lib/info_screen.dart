@@ -26,23 +26,26 @@ class InfoScreen extends StatelessWidget {
                     style: kTitleTextstyle,
                   ),
                   SizedBox(height: 20),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: <Widget>[
-                      SymptomCard(
-                        image: "assets/images/headache.png",
-                        title: "Headache",
-                        isActive: true,
-                      ),
-                      SymptomCard(
-                        image: "assets/images/caugh.png",
-                        title: "Caugh",
-                      ),
-                      SymptomCard(
-                        image: "assets/images/fever.png",
-                        title: "Fever",
-                      ),
-                    ],
+                  SingleChildScrollView(
+                    scrollDirection: Axis.horizontal,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: <Widget>[
+                        SymptomCard(
+                          image: "assets/images/headache.png",
+                          title: "Headache",
+                          isActive: true,
+                        ),
+                        SymptomCard(
+                          image: "assets/images/caugh.png",
+                          title: "Caugh",
+                        ),
+                        SymptomCard(
+                          image: "assets/images/fever.png",
+                          title: "Fever",
+                        ),
+                      ],
+                    ),
                   ),
                   SizedBox(height: 20),
                   Text("Prevention", style: kTitleTextstyle),
@@ -122,10 +125,14 @@ class PreventCard extends StatelessWidget {
                         fontSize: 16,
                       ),
                     ),
-                    Text(
-                      text,
-                      style: TextStyle(
-                        fontSize: 12,
+                    Expanded(
+                      child: Text(
+                        text,
+                        maxLines: 4,
+                        overflow: TextOverflow.ellipsis,
+                        style: TextStyle(
+                          fontSize: 12,
+                        ),
                       ),
                     ),
                     Align(
