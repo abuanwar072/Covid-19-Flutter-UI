@@ -22,10 +22,7 @@ class _MyHeaderState extends State<MyHeader> {
     return ClipPath(
       clipper: MyClipper(),
       child: Container(
-        padding: EdgeInsets.only(
-            left: 40,
-            top: (50 + widget.offset < 0) ? 0 : 50 + widget.offset,
-            right: 20),
+        padding: EdgeInsets.only(left: 40, top: 50, right: 20),
         height: 350,
         width: double.infinity,
         decoration: BoxDecoration(
@@ -42,36 +39,36 @@ class _MyHeaderState extends State<MyHeader> {
           ),
         ),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.end,
           children: <Widget>[
-            Align(
-              alignment: Alignment.topRight,
-              child: GestureDetector(
-                onTap: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) {
-                        return InfoScreen();
-                      },
-                    ),
-                  );
-                },
-                child: SvgPicture.asset("assets/icons/menu.svg"),
-              ),
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) {
+                      return InfoScreen();
+                    },
+                  ),
+                );
+              },
+              child: SvgPicture.asset("assets/icons/menu.svg"),
             ),
             SizedBox(height: 20),
             Expanded(
               child: Stack(
                 children: <Widget>[
-                  SvgPicture.asset(
-                    widget.image,
-                    width: 230,
-                    fit: BoxFit.fitWidth,
-                    alignment: Alignment.topCenter,
+                  Positioned(
+                    top: (widget.offset < 0) ? 0 : widget.offset,
+                    child: SvgPicture.asset(
+                      widget.image,
+                      width: 230,
+                      fit: BoxFit.fitWidth,
+                      alignment: Alignment.topCenter,
+                    ),
                   ),
                   Positioned(
-                    top: 20,
+                    top: 20 - widget.offset / 2,
                     left: 150,
                     child: Text(
                       "${widget.textTop} \n${widget.textBottom}",
