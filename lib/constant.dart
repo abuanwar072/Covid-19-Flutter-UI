@@ -1,3 +1,5 @@
+library constant;
+
 import 'package:flutter/material.dart';
 
 // Colors
