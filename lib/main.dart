@@ -1,7 +1,9 @@
 import 'package:covid_19/constant.dart';
+import 'package:covid_19/main_bloc.dart';
 import 'package:covid_19/widgets/counter.dart';
 import 'package:covid_19/widgets/my_header.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 void main() => runApp(MyApp());
@@ -19,7 +21,17 @@ class MyApp extends StatelessWidget {
           textTheme: TextTheme(
             body1: TextStyle(color: kBodyTextColor),
           )),
-      home: HomeScreen(),
+      home: MultiBlocProvider(
+        providers: [
+          BlocProvider<CounterBloc>(
+            create: (context) => CounterBloc(),
+          ),
+          BlocProvider<CountriesBloc>(
+            create: (context) => CountriesBloc(),
+          ),
+        ],
+        child: HomeScreen(),
+      ),
     );
   }
 }
@@ -32,6 +44,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   final controller = ScrollController();
   double offset = 0;
+  String selectedCountry = "Indonesia";
+  CounterBloc counterBloc;
+  CountriesBloc countriesBloc;
 
   @override
   void initState() {
@@ -44,6 +59,8 @@ class _HomeScreenState extends State<HomeScreen> {
   void dispose() {
     // TODO: implement dispose
     controller.dispose();
+    counterBloc.close();
+    countriesBloc.close();
     super.dispose();
   }
 
@@ -55,6 +72,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+    counterBloc = BlocProvider.of<CounterBloc>(context);
+    countriesBloc = BlocProvider.of<CountriesBloc>(context);
+    countriesBloc.add(true);
     return Scaffold(
       body: SingleChildScrollView(
         controller: controller,
@@ -82,26 +102,30 @@ class _HomeScreenState extends State<HomeScreen> {
                 children: <Widget>[
                   SvgPicture.asset("assets/icons/maps-and-flags.svg"),
                   SizedBox(width: 20),
-                  Expanded(
-                    child: DropdownButton(
-                      isExpanded: true,
-                      underline: SizedBox(),
-                      icon: SvgPicture.asset("assets/icons/dropdown.svg"),
-                      value: "Indonesia",
-                      items: [
-                        'Indonesia',
-                        'Bangladesh',
-                        'United States',
-                        'Japan'
-                      ].map<DropdownMenuItem<String>>((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                      onChanged: (value) {},
-                    ),
-                  ),
+                  BlocBuilder<CountriesBloc, List<String>>(
+                      builder: (context, countries) {
+                    return Expanded(
+                      child: DropdownButton(
+                        isExpanded: true,
+                        underline: SizedBox(),
+                        icon: SvgPicture.asset("assets/icons/dropdown.svg"),
+                        value: selectedCountry,
+                        items: countries
+                            .map<DropdownMenuItem<String>>((String value) {
+                          return DropdownMenuItem<String>(
+                            value: value,
+                            child: Text(value),
+                          );
+                        }).toList(),
+                        onChanged: (value) {
+                          counterBloc.add(value);
+                          setState(() {
+                            selectedCountry = value;
+                          });
+                        },
+                      ),
+                    );
+                  }),
                 ],
               ),
             ),
@@ -152,26 +176,29 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                       ],
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: <Widget>[
-                        Counter(
-                          color: kInfectedColor,
-                          number: 1046,
-                          title: "Infected",
-                        ),
-                        Counter(
-                          color: kDeathColor,
-                          number: 87,
-                          title: "Deaths",
-                        ),
-                        Counter(
-                          color: kRecovercolor,
-                          number: 46,
-                          title: "Recovered",
-                        ),
-                      ],
-                    ),
+                    child: BlocBuilder<CounterBloc, SituationCount>(
+                        builder: (context, count) {
+                      return Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: <Widget>[
+                          Counter(
+                            color: kInfectedColor,
+                            number: count.infected,
+                            title: "Infected",
+                          ),
+                          Counter(
+                            color: kDeathColor,
+                            number: count.death,
+                            title: "Deaths",
+                          ),
+                          Counter(
+                            color: kRecovercolor,
+                            number: count.recover,
+                            title: "Recovered",
+                          ),
+                        ],
+                      );
+                    }),
                   ),
                   SizedBox(height: 20),
                   Row(

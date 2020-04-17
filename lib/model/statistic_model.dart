@@ -4,19 +4,28 @@ part 'statistic_model.g.dart';
 
 @JsonSerializable(nullable: true)
 class Statistic {
+  Statistic();
   String get;
   Map<String, String> parameters;
   List<String> errors;
   int results;
+  List<Response> response;
+
+  factory Statistic.fromJson(Map<String, dynamic> json) =>
+      _$StatisticFromJson(json);
 }
 
 @JsonSerializable(nullable: true)
 class Response {
+  Response();
   String country;
   Cases cases;
   Deaths deaths;
   Tests test;
   DateTime time;
+
+  factory Response.fromJson(Map<String, dynamic> json) =>
+      _$ResponseFromJson(json);
 }
 
 @JsonSerializable(nullable: true)
@@ -47,4 +56,17 @@ class Tests {
   Tests();
   int total;
   factory Tests.fromJson(Map<String, dynamic> json) => _$TestsFromJson(json);
+}
+
+@JsonSerializable(nullable: true)
+class Countries {
+  Countries();
+  String get;
+  List<String> parameters;
+  List<String> errors;
+  int results;
+  List<String> response;
+
+  factory Countries.fromJson(Map<String, dynamic> json) =>
+      _$CountriesFromJson(json);
 }

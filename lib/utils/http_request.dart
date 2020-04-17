@@ -1,3 +1,5 @@
+library http_request;
+
 import 'package:covid_19/config.dart' as Config;
 import 'package:http/http.dart' as http;
 
@@ -21,10 +23,21 @@ class BaseHttpRequest {
 }
 
 class GetRequest extends BaseHttpRequest {
-  GetRequest() : super(HttpMethod.get);
+  GetRequest({Map<String, String> getParams = const {}})
+      : super(HttpMethod.get, getParams: getParams);
 
-  Future<Response> getRequest(String slug) {
-    var response = http.get(this.baseUrl + slug, headers: header);
-    return response;
+  String transformGetParam(Map<String, String> inputParam) {
+    String getUrl = "?";
+    inputParam.forEach((k, v) {
+      getUrl += "$k=$v&";
+    });
+    return getUrl;
+  }
+
+  Future<String> getRequest(String slug) async {
+    http.Response response = await http.get(
+        this.baseUrl + slug + transformGetParam(getParams),
+        headers: header);
+    return response.body;
   }
 }

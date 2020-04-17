@@ -13,7 +13,11 @@ Statistic _$StatisticFromJson(Map<String, dynamic> json) {
       (k, e) => MapEntry(k, e as String),
     )
     ..errors = (json['errors'] as List)?.map((e) => e as String)?.toList()
-    ..results = json['results'] as int;
+    ..results = json['results'] as int
+    ..response = (json['response'] as List)
+        ?.map((e) =>
+            e == null ? null : Response.fromJson(e as Map<String, dynamic>))
+        ?.toList();
 }
 
 Map<String, dynamic> _$StatisticToJson(Statistic instance) => <String, dynamic>{
@@ -21,6 +25,7 @@ Map<String, dynamic> _$StatisticToJson(Statistic instance) => <String, dynamic>{
       'parameters': instance.parameters,
       'errors': instance.errors,
       'results': instance.results,
+      'response': instance.response,
     };
 
 Response _$ResponseFromJson(Map<String, dynamic> json) {
@@ -81,4 +86,22 @@ Tests _$TestsFromJson(Map<String, dynamic> json) {
 
 Map<String, dynamic> _$TestsToJson(Tests instance) => <String, dynamic>{
       'total': instance.total,
+    };
+
+Countries _$CountriesFromJson(Map<String, dynamic> json) {
+  return Countries()
+    ..get = json['get'] as String
+    ..parameters =
+        (json['parameters'] as List)?.map((e) => e as String)?.toList()
+    ..errors = (json['errors'] as List)?.map((e) => e as String)?.toList()
+    ..results = json['results'] as int
+    ..response = (json['response'] as List)?.map((e) => e as String)?.toList();
+}
+
+Map<String, dynamic> _$CountriesToJson(Countries instance) => <String, dynamic>{
+      'get': instance.get,
+      'parameters': instance.parameters,
+      'errors': instance.errors,
+      'results': instance.results,
+      'response': instance.response,
     };
