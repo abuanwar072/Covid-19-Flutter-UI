@@ -10,6 +10,8 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    _deviceHeight = MediaQuery.of(context).size.height;
+    _deviceWidth = MediaQuery.of(context).size.width;
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Covid 19',
@@ -67,9 +69,9 @@ class _HomeScreenState extends State<HomeScreen> {
               offset: offset,
             ),
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 20),
-              padding: EdgeInsets.symmetric(vertical: 10, horizontal: 20),
-              height: 60,
+              margin: EdgeInsets.symmetric(horizontal: _deviceWidth * 0.02),
+              padding: EdgeInsets.symmetric(vertical: _deviceHeight * 0.01, horizontal: _deviceWidth * 0.02),
+              height: _deviceHeight * 0.06,
               width: double.infinity,
               decoration: BoxDecoration(
                 color: Colors.white,
