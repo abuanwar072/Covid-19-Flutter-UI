@@ -1,5 +1,5 @@
 import 'package:covid_19/constant.dart';
-import 'package:covid_19/info_screen.dart';
+import 'package:covid_19/screens/info_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -15,14 +15,15 @@ class MyHeader extends StatefulWidget {
   @override
   _MyHeaderState createState() => _MyHeaderState();
 }
-
+int cnt = 0;
+  
 class _MyHeaderState extends State<MyHeader> {
   @override
   Widget build(BuildContext context) {
     return ClipPath(
       clipper: MyClipper(),
       child: Container(
-        padding: EdgeInsets.only(left: 40, top: 50, right: 20),
+        padding: EdgeInsets.only(left: 20.0, top: 50.0, right: 15.0),
         height: 350,
         width: double.infinity,
         decoration: BoxDecoration(
@@ -30,8 +31,8 @@ class _MyHeaderState extends State<MyHeader> {
             begin: Alignment.topRight,
             end: Alignment.bottomLeft,
             colors: [
-              Color(0xFF3383CD),
-              Color(0xFF11249F),
+             const  Color(0xFF3383CD),
+              const Color(0xFF11249F),
             ],
           ),
           image: DecorationImage(
@@ -43,14 +44,15 @@ class _MyHeaderState extends State<MyHeader> {
           children: <Widget>[
             GestureDetector(
               onTap: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return InfoScreen();
-                    },
-                  ),
-                );
+                if (cnt == 0){
+                  cnt++;
+                  Navigator.pushNamed(context,'info_screen');
+              }
+              else {
+                cnt = 0;
+                Navigator.pop(context);
+              }
+                
               },
               child: SvgPicture.asset("assets/icons/menu.svg"),
             ),

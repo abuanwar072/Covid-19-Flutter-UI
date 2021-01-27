@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1061242853679",
+    "project_id": "covidvisualizer-f7f81",
+    "storage_bucket": "covidvisualizer-f7f81.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1061242853679:android:f2361a21d2bb91904be9da",
+        "android_client_info": {
+          "package_name": "com.covidvisualizer.covid_19"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1061242853679-ifrqfsnga5q4u4m4stbgq0k57815bnog.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAgh1wlUCClW6divlTPK3x7pXLBn8k-MyQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1061242853679-ifrqfsnga5q4u4m4stbgq0k57815bnog.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
