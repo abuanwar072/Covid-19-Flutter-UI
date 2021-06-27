@@ -18,7 +18,7 @@ class CountryData {
   int deaths;          //done
   int todayDeaths;    //d 
   int recovered;       //done
- int todayRecovered; //d
+  int todayRecovered; //d
   int active; //done 
   int critical; //d 
   int casesPerOneMillion;
